@@ -2,6 +2,30 @@ const mysql = require(`mysql`);
 const inquirer = require("inquirer");
 const cTable = require("console.table");
 
+
+
+const connection = mysql.createConnection({
+  host: "localhost",
+
+  // Your port; if not 3306
+  port: 3306,
+
+  // Your username
+  user: "root",
+
+  // Your password
+  password: "password",
+  database: "my_employees"
+});
+
+connection.connect(function(err) {
+  if (err) throw err;
+  console.log("connected as id " + connection.threadId) + "\n";
+
+  mainPrompt() ;
+  //  connection.end();//
+});
+
 // prompt questions (what would you like do do)
 
 function mainPrompt() {
@@ -20,10 +44,9 @@ function mainPrompt() {
         "Update employee role"
       ] 
     })
-    .then(function(result) {
-      console.log("You entered: " + result.option);
-
-      switch (result.action) {
+    .then(function(response) {
+      // Switch case and generate fucnction depends on action's choice
+      switch (response.action) {
         case "Add department":
           addDepartment();
           break;
@@ -31,6 +54,7 @@ function mainPrompt() {
           addRole();
           break;
         case "Add employee":
+
           addEmployee();
           break;
         case "View departments":
@@ -56,11 +80,12 @@ function addDepartment() {
     type: "input",
     message: "What department do you want to add?",
     name: "deptName"
-  }).then(function(answer){
-    connection.query("INSERT INTO department (name) VALUES (?)", [answer.deptName] , function(err, res) {
+  }).then(function(response){
+    connection.query("INSERT INTO department (name) VALUES (?)", [response.deptName] , function(err, res) {
       if (err) throw err;
-      console.table(res)
+      console.table([response.deptName])
       mainPrompt()
+      
   })
   })
 };
@@ -119,16 +144,45 @@ function addEmployee() {
       }
     ])
     .then(function(answer) {
-      connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [answer.eeFirstName, answer.eeLastName, answer.roleID, answer.managerID], function(err, res) {
+      connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [answer.emFirst, answer.emLast, answer.roleID, answer.managerID], function(err, res) {
         if (err) throw err;
         console.table(res);
-        startScreen();
+        mainPrompt();
       });
     });
 }
 
+function viewDepartments() {
+  
+  connection.query("SELECT * FROM department", function(err, res) {
+    if (err) throw err;
+    console.table(res);
+    mainPrompt();
+
+  });
+  // show (console.table)
+}
 
 
+function viewRoles() {
+  console.log("Selecting all roles...\n");
+  connection.query("SELECT * FROM role", function(err, res) {
+    if (err) throw err;
+    console.table(res);
+    mainPrompt();
+  });
+  // show the  (console.table)
+}
+
+function viewEmployees() {
+ 
+  connection.query("SELECT * FROM employee", function(err, res) {
+    if (err) throw err;
+    console.table(res);
+    mainPrompt();
+  });
+  // show the (console.table)
+}
 
   
 
