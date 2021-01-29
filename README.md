@@ -1,12 +1,10 @@
 # sql-employee-tracker
 
-
+ Using the MySQL dependency as the database and to take the inforamtion stored in the database to create an internal tool to view employee, role, and department data as well as add an employee, role, or department. 
 ![Site](frontpage.png)
 
 ## Site-video 
 [Demo Video]()  
-
-## Heroku-Deployed
 
 
 # Table of Contents 
@@ -30,12 +28,37 @@
 
 
 ## Description of Page Building 
-* nmp install to download packages and dependencies 
+* In MYSQL 
 
+* IN javascript file 
+  
+* nmp install to download packages and dependencies 
+* populate MySQL database with three tables for employee, role, and department.
+* add MySQL password to the server.js file to ensure that the connection to the database can be made and requests for actions can be pushed to the database
 
 
 
 ## Code Snippet
+
+Install npm package 
+npm install express
+
+Required variables 
+``` Javascript
+const mysql = require(`mysql`);
+const inquirer = require("inquirer");
+const cTable = require("console.table");
+```
+Sets up connection 
+``` Javascript
+const connection = mysql.createConnection({
+  host: "localhost",
+  port: 3306,
+  user: "root",
+  password: "password",
+  database: "my_employees"
+});
+```
 
 
 ## Technologies Used
