@@ -3,31 +3,26 @@ const inquirer = require("inquirer");
 const cTable = require("console.table");
 
 
-
+// port 3306 connection (√)
 const connection = mysql.createConnection({
   host: "localhost",
-
-  // Your port; if not 3306
   port: 3306,
-
-  // Your username
   user: "root",
-
-  // Your password
   password: "password",
   database: "my_employees"
 });
 
+// generate first mainPrompts (√)
 connection.connect(function(err) {
   if (err) throw err;
   console.log("connected as id " + connection.threadId) + "\n";
-
   mainPrompt() ;
   //  connection.end();//
 });
 
-// prompt questions (what would you like do do)
 
+
+// prompt questions (what would you like do do) (√)
 function mainPrompt() {
   inquirer
     .prompt({
@@ -75,21 +70,24 @@ function mainPrompt() {
     });
 }
 
+// function addDeparment (√)
 function addDepartment() {
-  inquirer.prompt({
+  inquirer.prompt
+  ({
     type: "input",
     message: "What department do you want to add?",
-    name: "deptName"
+    name: "newDep"
   }).then(function(response){
-    connection.query("INSERT INTO department (name) VALUES (?)", [response.deptName] , function(err, res) {
+
+    connection.query("INSERT INTO department(department_name) VALUES (?)", [response.newDep] , function(err, res) {
       if (err) throw err;
-      console.table([response.deptName])
+      console.table([response.newDep])
       mainPrompt()
-      
   })
   })
 };
 
+// add ROLE
 function addRole() {
   inquirer
     .prompt([
@@ -118,7 +116,7 @@ function addRole() {
     });
 }
 
-
+// add EMPLOYEES 
 function addEmployee() {
   inquirer
     .prompt([
@@ -146,14 +144,14 @@ function addEmployee() {
     .then(function(answer) {
       connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [answer.emFirst, answer.emLast, answer.roleID, answer.managerID], function(err, res) {
         if (err) throw err;
-        console.table(res);
+        console.table([answer.emFirst, answer.emLast] + " added to the company!");
         mainPrompt();
       });
     });
 }
 
+// function VIEWDEPARTMENT all done 
 function viewDepartments() {
-  
   connection.query("SELECT * FROM department", function(err, res) {
     if (err) throw err;
     console.table(res);
@@ -163,32 +161,68 @@ function viewDepartments() {
   // show (console.table)
 }
 
+// // function ViewROLES ALL DONE 
+// function viewRoles() {
+//   console.log("Selecting all roles...\n");
 
-function viewRoles() {
-  console.log("Selecting all roles...\n");
-  connection.query("SELECT * FROM role", function(err, res) {
-    if (err) throw err;
-    console.table(res);
-    mainPrompt();
-  });
-  // show the  (console.table)
+//   connection.query("SELECT * FROM role", function(err, res) {
+//     if (err) throw err;
+//     console.table(res);
+//     mainPrompt();
+//   });
+//   // show the  (console.table)
+// }
+
+
+function viewRoles(){
+  console.log("ALL THE ROLES IN DEBE'S COMPANY");
+  var query = "SELECT title, salary, department_name FROM role LEFT JOIN department ON role.department_id= department.id;"
+  connection.query(query, function (err, result) {
+      if (err) throw err;
+      console.table(result)
+      mainPrompt();
+  })
 }
 
+// view employees, view everything that is related to the employees 
 function viewEmployees() {
- 
-  connection.query("SELECT * FROM employee", function(err, res) {
-    if (err) throw err;
-    console.table(res);
-    mainPrompt();
+  console.log("Display all employees in DEBE's company!");
+  var allEQuery =
+    "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.department_name AS department, role.salary FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id;";
+  connection.query(allEQuery, function(err, answer) {
+    console.log("\n Employees retrieved from Database \n");
+    console.table(answer);
   });
-  // show the (console.table)
+  mainPrompt();
 }
+
+
+  function updateEmployee() {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          message: "Which employee would you like to update?",
+          name: "emName"
+        },
+  
+        {
+          type: "input",
+          message: "What do you want to update this employee to?",
+          name: "emUpdate"
+        }
+      ])
+      .then(function(response) {
+        // let query = `INSERT INTO department (name) VALUES ("${answer.deptName}")`
+        //let query = `'UPDATE employee SET role_id=${answer.updateRole} WHERE first_name= ${answer.eeUpdate}`;
+        //console.log(query);
+  
+        connection.query('UPDATE employee SET role_id= ?  WHERE first_name=?',[response.emUpdate, response.emName],function(err, res) {
+          if (err) throw err;
+          console.table(res);
+          mainPrompt();
+        });
+      });
+  }
 
   
-
-  // -- have them join if call on 
-  // at one point i have to join these table information/value/column together
-  // I am gonna need to use 
-  // view department just one thing 
-  // view employees join all of it 
-  // view role, then I join left join 
