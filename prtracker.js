@@ -17,7 +17,7 @@ const role = require('./constr/role');
 const department = require('./constr/department');
 
 //* Arrays
-let managerArray = [];
+let managerArray = []
 let roleChoices = [];
 let deptArray = [];
 let employeeIDArray = [];

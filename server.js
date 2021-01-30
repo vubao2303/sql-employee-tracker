@@ -2,6 +2,8 @@ const mysql = require(`mysql`);
 const inquirer = require("inquirer");
 const cTable = require("console.table");
 
+//* Switching Logger to Chalk NPM Package to print colorful console.log messages
+const chalk = require('chalk');
 
 // port 3306 connection (√)
 const connection = mysql.createConnection({
@@ -23,6 +25,8 @@ connection.connect(function(err) {
 
 // prompt questions (what would you like do do) (√)
 function mainPrompt() {
+	console.log( chalk.magentaBright(`WELCOME TO DEBE COMPANY`)
+	);
   inquirer
     .prompt({
     type: "list",
@@ -86,53 +90,7 @@ function addDepartment() {
   })
 };
 
-
-
 // add ROLE
-//* Builds array for Job Title Names
-function buildroleChoices() {
-	const query = `
-    SELECT id, title 
-    FROM role;`;
-
-	connection.query(query, function (err, res) {
-		if (err) throw err;
-		for (let i = 0; i < res.length; i++) {
-			roleChoices.push(res[i].title);
-		}
-	});
-}
-
-
-
-function addRole() {
-  
-  inquirer
-    .prompt([
-      {
-        type: "input",
-        message: "What role would you like to add?",
-        name: "title"
-      },
-      {
-        type: "input",
-        message: "What is the salary for this role?",
-        name: "salary"
-      },
-      {
-        type: "input",
-        message: "What is the department id number?",
-        name: "department_id"
-      }
-    ])
-    .then(function(response) {
-      connection.query("INSERT INTO role SET ?", response, function(err, res) {
-        if (err) throw err;
-        console.table(res);
-        mainPrompt()
-      });
-    });
-}
 
 const depChoices = [];
 function addRole() {
@@ -180,46 +138,6 @@ function addRole() {
 		mainPrompt()
 	});
 }
-
-
-// const depChoices = [];
-// function addRole() {
-// 	let query = "SELECT * FROM department";
-// 	connection.query(query, function (err, res) {
-// 		res.forEach(function (element) {
-//       depChoices.push(element.department_name);
-//     });
-//   });
-
-//   console.log(depChoices);
-// 	inquirer.prompt([
-// 		{
-// 			name: "title",
-// 			type: "input",
-// 			message: "Enter new role title"
-// 		},
-// 		{
-// 			name: "salary",
-// 			type: "input",
-// 			message: "What is the salary for this role?",
-//     },
-// 		{
-// 			name: "department_id",
-// 			type: "list",
-// 			message: "Which department does this role belong to?",
-// 			choices: depChoices
-// 		}
-// 	]).then(function(response) {
-//     connection.query("INSERT INTO role SET ?", response, function(err, res) {
-//       if (err) throw err;
-//       console.table(res);
-//       mainPrompt()
-//     });
-//   });
-// }
-
-
-
 
 
 // add EMPLOYEES 
