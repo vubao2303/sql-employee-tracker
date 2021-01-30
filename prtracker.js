@@ -71,11 +71,7 @@ connection.connect(function (err) {
 
 //* function to start the program, prints app header and has intro inquirer prompt
 function startApp() {
-	console.log(
-		chalk.magentaBright(`
-    
-          YAY                                                                           
-    `)
+	console.log( chalk.magentaBright(`WELCOME TO DEBE COMPANY`)
 	);
 	inquirer.prompt(introQ).then(function (data) {
 		const intoQuestion = data.queryInto;

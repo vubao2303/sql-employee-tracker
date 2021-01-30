@@ -17,7 +17,8 @@ const connection = mysql.createConnection({
 // generate first mainPrompts (√)
 connection.connect(function(err) {
   if (err) throw err;
-  console.log("connected as id " + connection.threadId) + "\n";
+  console.log( chalk.magentaBright(`WELCOME TO DEBE COMPANY`)
+	);
   mainPrompt() ;
   
   //  connection.end();//
@@ -25,8 +26,6 @@ connection.connect(function(err) {
 
 // prompt questions (what would you like do do) (√)
 function mainPrompt() {
-	console.log( chalk.magentaBright(`WELCOME TO DEBE COMPANY`)
-	);
   inquirer
     .prompt({
     type: "list",
@@ -176,6 +175,7 @@ function addEmployee() {
 
 // function VIEWDEPARTMENT all done 
 function viewDepartments() {
+	console.log(chalk.magentaBright(`CHECK OUT OUR AWESOME DEPARTMENTS`))
   connection.query("SELECT * FROM department", function(err, res) {
     if (err) throw err;
     console.table(res);
@@ -187,25 +187,26 @@ function viewDepartments() {
 
 
 function viewRoles(){
-  console.log("ALL THE ROLES IN DEBE'S COMPANY");
+	console.log(chalk.magentaBright(`ALL THE ROLES IN DEBE'S COMPANY!`));
   var query = "SELECT title, salary, department_name FROM role LEFT JOIN department ON role.department_id= department.id;"
   connection.query(query, function (err, result) {
       if (err) throw err;
       console.table(result)
-      mainPrompt();
-  })
+			mainPrompt();
+	})
+
 }
 
 // view employees, view everything that is related to the employees 
 function viewEmployees() {
-  console.log("Display all employees in DEBE's company!");
+  console.log(chalk.magentaBright(`ALL THE EXCELLENT EMPLOYEES IN DEBE'S COMPANY!`));
   var allEQuery =
     "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.department_name AS department, role.salary FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id;";
   connection.query(allEQuery, function(err, response) {
-    console.log("\n Employees retrieved from Database \n");
     console.table(response);
+    mainPrompt();
   });
-  mainPrompt();
+  
 }
 
 
@@ -231,7 +232,7 @@ function viewEmployees() {
   
         connection.query('UPDATE employee SET role_id= ?  WHERE first_name=?',[response.emUpdate, response.emName],function(err, res) {
           if (err) throw err;
-          console.table(res);
+          console.log("employee UPDATED ");
           mainPrompt();
         });
       });

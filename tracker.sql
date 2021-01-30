@@ -14,9 +14,9 @@ CREATE TABLE department(
 CREATE TABLE role(
     id INT AUTO_INCREMENT NOT NULL,
     title VARCHAR(30) NOT NULL,
-    salary DECIMAL (10,5) NOT NULL,
+    salary DECIMAL (10,2) NOT NULL,
     department_id INT,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
     FOREIGN KEY (department_id)
     REFERENCES department(id)   
 );
@@ -27,10 +27,23 @@ CREATE TABLE employee(
     last_name VARCHAR(30) NOT NULL,
     role_id INT NOT NULL,
     manager_id INT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
     FOREIGN KEY (role_id)
     REFERENCES role(id) 
 );
+
+INSERT INTO department (department_name)
+VALUES ("Sales"),("Engineering"),("Finance");
+
+-- roles 
+INSERT INTO role (title, salary, department_id)
+VALUES ("Fun Associate", 60000.00, 1);
+INSERT INTO role (title, salary, department_id)
+VALUES ("Manager", 85000.00, 1);
+INSERT INTO role (title, salary, department_id)
+VALUES ("Engineer", 165000.00, 2);
+INSERT INTO role (title, salary, department_id)
+VALUES ("Legal Manager", 245000.00, 3);
 
 
 -- employees
@@ -49,23 +62,9 @@ VALUES ("Zeus", "Menethil", 4, 1);
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("Hera", "Drake", 4, 2);
 
--- roles 
-INSERT INTO role (title, salary, department_id)
-VALUES ("Fun Associate", 60000.00, 1);
-INSERT INTO role (title, salary, department_id)
-VALUES ("Manager", 85000.00, 1);
-INSERT INTO role (title, salary, department_id)
-VALUES ("Engineer", 165000.00, 2);
-INSERT INTO role (title, salary, department_id)
-VALUES ("Legal Manager", 245000.00, 3);
 
 
-INSERT INTO department (name)
-VALUES ("Sales"),("Engineering"),("Finance");
 
-
--- SELECT * FROM department;
--- SELECT * FROM role;
--- SELECT * FROM employee;
-
-SELECT * FROM my_employees;
+SELECT * FROM department;
+SELECT * FROM role;
+SELECT * FROM employee;
