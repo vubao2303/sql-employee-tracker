@@ -30,7 +30,7 @@
 ## Description of Page Building 
 * In MYSQL 
   <ul> 
-  <li> Create 3 tables: department, role, and employees
+  <li> populate MySQL database with three tables for employee, role, and department.
   <li> Insert Seeds file, which are value into tables such as names, id, title, salaries. 
   <li> Select table and create database in workbench
   </li>
@@ -39,16 +39,14 @@
 
 * IN javascript file 
   <ul> 
-  <li> 
-  <li> 
-  <li> 
+  <li> nmp install to download packages and dependencies 
+  <li> add MySQL password to the server.js file to ensure that the connection to the database can be made and requests for actions can be pushed to the database
+  <li> create promts for user inputs
+  <li> Use Lefjoin to join database tables 
+  <li> Generate table's value and link user input to create more database 
   </li>
   </ul>
   
-* nmp install to download packages and dependencies 
-* populate MySQL database with three tables for employee, role, and department.
-* add MySQL password to the server.js file to ensure that the connection to the database can be made and requests for actions can be pushed to the database
-
 
 
 ## Code Snippet
@@ -73,16 +71,32 @@ const connection = mysql.createConnection({
 });
 ```
 
+Using LEFT JOIN to join two tables with the same ID 
+``` Javascript
+function viewEmployees() {
+  console.log(chalk.magentaBright(`ALL THE EXCELLENT EMPLOYEES IN DEBE'S COMPANY!`));
+  var allEQuery =
+    "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.department_name AS department, role.salary FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id;";
+  connection.query(allEQuery, function (err, response) {
+    console.table(response);
+    mainPrompt();
+  });
+}
+```
+
 
 ## Technologies Used
 - Node - an open-source, cross-platform, back-end JavaScript runtime environment that executes JavaScript code outside a web browser.
   * [Node.js](https://nodejs.org/dist/latest-v14.x/docs/api/)
+-  Inquier - NPM package to interact with the user via the command-line.
+  * [Inquier] (https://www.npmjs.com/package/inquirer/v/0.2.3)
+- NPM package to connect to your MySQL database and perform queries.
+  * [Git](https://www.npmjs.com/package/mysql)
 - Git - version control system to track changes to source code
   * [Git](https://git-scm.com/)
 - GitHub - hosts repository that can be deployed to GitHub Pages
   * [Github](https://github.com/)
-
-
+  
 
 ## Author
 
