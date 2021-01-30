@@ -1,10 +1,10 @@
 # sql-employee-tracker
 
  Using the MySQL dependency as the database and to take the inforamtion stored in the database to create an internal tool to view employee, role, and department data as well as add an employee, role, or department. 
-![Site](frontpage.png)
+![Site](Assets/mainpage.png)
 
 ## Site-video 
-[Demo Video]()  
+[Demo Video](https://drive.google.com/file/d/1sT1G3WIel3KBlnAU-rYMioZblzMNnNo_/view)  
 
 
 # Table of Contents 
