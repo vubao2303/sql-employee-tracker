@@ -12,8 +12,6 @@
 
 [Guide Video](#Guide-Video)
 
-[Heroku](#Heroku-Deployed)
-
 [Table of Contents](#Table-of-Content)
 
 [Description of Page Building](#Description-of-Page-Building)
@@ -88,8 +86,8 @@ function viewEmployees() {
 ## Technologies Used
 - Node - an open-source, cross-platform, back-end JavaScript runtime environment that executes JavaScript code outside a web browser.
   * [Node.js](https://nodejs.org/dist/latest-v14.x/docs/api/)
--  Inquier - NPM package to interact with the user via the command-line.
-  * [Inquier] (https://www.npmjs.com/package/inquirer/v/0.2.3)
+- Inquier - NPM package to interact with the user via the command-line.
+  * [Inquirer] (https://www.npmjs.com/package/inquirer/v/0.2.3)
 - NPM package to connect to your MySQL database and perform queries.
   * [Git](https://www.npmjs.com/package/mysql)
 - Git - version control system to track changes to source code
