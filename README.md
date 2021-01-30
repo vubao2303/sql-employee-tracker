@@ -29,8 +29,21 @@
 
 ## Description of Page Building 
 * In MYSQL 
+  <ul> 
+  <li> Create 3 tables: department, role, and employees
+  <li> Insert Seeds file, which are value into tables such as names, id, title, salaries. 
+  <li> Select table and create database in workbench
+  </li>
+  </ul>
+
 
 * IN javascript file 
+  <ul> 
+  <li> 
+  <li> 
+  <li> 
+  </li>
+  </ul>
   
 * nmp install to download packages and dependencies 
 * populate MySQL database with three tables for employee, role, and department.
