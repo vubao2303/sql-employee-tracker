@@ -37,7 +37,8 @@ function mainPrompt() {
         "View departments",
         "View roles",
         "View employees",
-        "Update employee role"
+        "Update employee role",
+        "All done"
       ]
     })
     .then(function (response) {
@@ -252,4 +253,9 @@ function updateEmployee(list) {
       });
     });
   });
+}
+
+function endConnection(){
+  console.log("Exit");
+  connection.end();
 }

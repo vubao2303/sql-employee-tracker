@@ -33,11 +33,11 @@ function mainPrompt() {
     message: 'What would you like to do?',
     choices: [
         "Add department",
-        "Add role",
-        "Add employee",
         "View departments",
+        "Add role",
         "View roles",
         "View employees",
+        "Add employee",
         "Update employee role"
       ] 
     })
